@@ -91,12 +91,41 @@ class Ball {
   move() {
     this.x += this.dx;
     this.y += this.dy;
-    let hitP1 = collideRectRect(
-      this.x, this.y, this.size, this.size,
-      p1.x, p1.y, p1.width, p1.height,
-    );
-    if(hitP1) {
-      this.dx *= -1;
+    let hitP1Face = collideLineRect(
+        p1.x + p1.width,
+        p1.y,
+        p1.x + p1.width,
+        p1.y + p1.height,
+        this.x,
+        this.y,
+        this.size,
+        this.size,
+    )
+    if (hitP1Face) {
+        this.dx *= -1;
+    }
+    let hitP1Top = collideLineRect(
+        p1.x,
+        p1.y,
+        p1.x + p1.width,
+        p1.y,
+        this.x,
+        this.y,
+        this.size,
+        this.size,
+    )
+    let hitP1Bottom = collideLineRect(
+        p1.x,
+        p1.y + p1.height,
+        p1.x + p1.width,
+        p1.y + p1.height,
+        this.x,
+        this.y,
+        this.size,
+        this.size,
+    )
+    if (hitP1Top || hitP1Bottom) {
+        this.dy *= -1;
     }
     if((this.y + this.size) >= height || this.y <= 0) {
       this.dy *= -1;
